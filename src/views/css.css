@@ -1,0 +1,1393 @@
+/****************
+css 获取自定义data-*数据
+attr() 目前支持的仅有伪元素的 content 属性，把想添加的内容以此罗列
+******************/
+
+.self-data span[data-descr] {
+    position: relative;
+    text-decoration: none;
+    color: #00f;
+    cursor: help;
+    padding-left: 50px;
+}
+
+
+/*
+url(URL) 函数：URL 可以使用单引号或双引号包含的字符串，也可以直接书写。
+可以在此函数中使用相对地址。相对地址相对于 CSS 样式表的 URL（而不是网页的 URL）。
+*/
+
+.self-data span[data-descr]:hover::after {
+    content: " ("attr(data-descr) ")"' 'url(https://mdn.mozillademos.org/files/7691/mdn-favicon16.png) "\1f4a1";
+    position: absolute;
+    left: 135px;
+    top: 0px;
+    min-width: 218px;
+    border: 1px #aaaaaa solid;
+    border-radius: 10px;
+    background-color: #4c21e9;
+    padding: 2px 0 2px 5px;
+    color: #e7d8d8;
+    font-size: 14px;
+    z-index: 1;
+}
+
+.self-data span[data-descr]:hover::before {
+    content: '::before';
+    position: absolute;
+    left: -5px;
+    top: 3px;
+    color: #000000;
+    font-size: 14px;
+    z-index: 1;
+}
+
+.self-data>ol {
+    font-size: 16px;
+    padding: 10px;
+    margin: 0;
+}
+
+.self-data li:not(.nots) {
+    color: rgb(7, 182, 80);
+}
+
+
+/****************
+css 动画
+animation-name：指定@keyframes描述动画关键帧的规则名称。可以依次写出多个动画
+animation-duration：配置动画完成一个周期所需的时间。默认值为0s，表示无动画。
+animation-timing-function：通过建立加速曲线，动画如何在关键帧之间过渡。
+animation-delay：配置元素加载时间与动画序列开始之间的延迟。
+animation-iteration-count：配置动画应重复的次数，任何大于零的数字，不可为负值；您可以指定infinite无限期重复动画，。
+animation-direction：配置动画在序列中每次运行时是否应交替显示方向或重置为起点并重复自身，
+常用值：alternate动画交替反向运行，反向运行时，动画按步后退，同时，带时间功能的函数也反向，比如，ease-in 在反向时成为ease-out。
+
+animation-fill-mode 设置CSS动画在执行之前和之后如何将样式应用于其目标
+可用值：
+  forwards：会在动画结束时，保持最后一帧样式
+  backwards：在应用于目标时立即应用第一个关键帧中定义的样式值
+
+animation是以上属性的简写集合，只需将每个属性的可用值依次罗列出来即可；
+animation:  3s alternate 3 slidein; 或 animation: alternate 3s 3 slidein;
+
+// 可以添加js监听动画事件
+element.addEventListener("animationstart", listener, false);
+element.addEventListener("animationend", listener, false);
+element.addEventListener("animationiteration", listener, false);
+******************/
+
+.animation>p {
+    animation-name: slidein, colors;
+    animation-duration: 3s, 3s;
+    animation-iteration-count: 3, 3;
+    animation-direction: alternate;
+    animation-fill-mode: none, forwards;
+}
+
+@keyframes slidein {
+    from {
+        margin-left: 80%;
+        width: 40%;
+    }
+    to {
+        margin-left: 0%;
+        width: 100%;
+    }
+}
+
+@keyframes colors {
+    from {
+        color: red;
+        font-size: 12px;
+    }
+    to {
+        color: green;
+        font-size: 22px;
+    }
+}
+
+.transitions {
+    width: 200px;
+    height: 50px;
+    background-color: rgb(224, 176, 176)
+}
+
+.transitions:hover {
+    transition: background-color 1s 500ms;
+    background-color: rgb(176, 224, 190)
+}
+
+
+/***********************
+使用文字对背景图进行剪切
+background-attachment：决定背景图像的位置是在视口内固定 fixed，还是随着包含它的区块滚动 scroll。
+************************/
+
+.backgrounds p {
+    display: inline-block;
+    width: 180px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: 10px;
+    /* transparent：透明效果 */
+    color: transparent;
+    background-image: url('../assets/timg.jpg');
+    background-size: cover;
+    background-clip: text;
+    background-origin: content-box;
+    background-position: top 0px right 0px;
+}
+
+
+/*************************************
+             背景图缩写方法
+*************************************/
+
+.background2 {
+    font-size: 12px;
+    height: 240px;
+    background: url('../assets/timg.jpg') honeydew no-repeat 10% 100% / 180px 100px;
+}
+
+.background2 ol {
+    padding-left: 18px;
+    margin: 0;
+}
+
+
+/*************************************
+                 滤镜
+*************************************/
+
+.lvjing>div {
+    margin: 0 0 5px 0;
+    display: flex;
+    font-size: 16px;
+}
+
+.lvjing>div>p:nth-child(1) {
+    width: 78%;
+}
+
+.lvjing img {
+    width: 80px;
+    height: 70px;
+    align-self: center;
+}
+
+
+/* 多重滤镜效果可以写到一个filter()里 */
+
+
+/* 模糊 blur 和 对比度 grayscale*/
+
+.blurs>img {
+    filter: blur(0.05vw) grayscale(80%);
+    /* rem px vh vw 都可以*/
+}
+
+
+/* 亮度 */
+
+.brightness>img {
+    filter: brightness(1.2);
+}
+
+
+/* 对比度 */
+
+.contrast>img {
+    filter: contrast(20%);
+    /* rem px vh vw %都可以*/
+}
+
+
+/* 阴影 */
+
+.dropShadow>img {
+    filter: drop-shadow(10px 10px 20px red);
+    /* rem px vh vw %都可以*/
+}
+
+
+/* 灰度 */
+
+.grayscale>img {
+    filter: grayscale(80%);
+}
+
+
+/* 反转 */
+
+.invert>img {
+    filter: invert(100%)
+}
+
+
+/* 透明度 */
+
+.opacity>img {
+    filter: opacity(30%)
+}
+
+
+/* 转换为深褐色 */
+
+.sepia>img {
+    filter: sepia(100%)
+}
+
+
+/* 饱和度 */
+
+.saturate>img {
+    filter: saturate(50%);
+}
+
+
+/*************************************
+              阴影的写法
+*************************************/
+
+.shadow {
+    width: 150px;
+    height: 50px;
+    margin-top: 20px;
+    background: rgb(245, 244, 244);
+    /* 阴影也会随着圆角变化 */
+    border-bottom-right-radius: 20px;
+}
+
+
+/* 阴影模糊半径：值越大，模糊面积越大，阴影就越大越淡。 不能为负值*/
+
+
+/* 阴影扩散半径：取正值时，阴影扩大；取负值时，阴影收缩 */
+
+.shadow1 {
+    /* x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+    box-shadow: 4px 4px 4px 5px rgba(69, 238, 134, 0.8);
+}
+
+.shadow2 {
+    /* 插页(阴影向内) x偏移量 | y偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+    /* inset时，x y 偏移量默认在 top left 数值为负数时，会定位到 right bottom */
+    box-shadow: inset -4px 4px 4px -1px rgba(226, 110, 110, 0.7);
+}
+
+.shadow3 {
+    /* 任意数量的阴影，以逗号分隔 */
+    box-shadow: 5px 5px 2px 3px red, inset 2px 2px 2px 1px rgba(133, 226, 110, 0.7);
+}
+
+
+/*************************************
+            border 的写法
+*************************************/
+
+.border {
+    width: 170px;
+    height: 100px;
+    margin-top: 20px;
+    background: rgb(221, 220, 220);
+    box-sizing: border-box;
+}
+
+.border1 {
+    /* 与margin一样，可以写4个，也可写两个*/
+    border-width: 6px 14px 10px 20px;
+    /*  border-width: 2px 8px;  */
+    border-color: red blue sandybrown yellow;
+    border-style: solid dashed ridge dotted;
+}
+
+.border2 {
+    border-width: 10px 26px;
+    border-color: indigo;
+    border-style: double;
+    background-clip: content-box;
+}
+
+
+/*************************************
+               表格样式
+*************************************/
+
+.isTable {
+    border-collapse: collapse;
+    caption-side: bottom;
+    font-size: 14px;
+    table-layout: fixed;
+    width: 340px;
+}
+
+.isTable>caption {
+    border: 1px solid red;
+}
+
+.isTable td {
+    border: 1px solid blue;
+}
+
+.toLong {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.inputs input {
+    padding-left: 5px;
+    caret-color: rgb(10, 184, 76);
+    width: 40%;
+    margin: 5px;
+}
+
+.inputs>input:nth-of-type(1)::placeholder {
+    color: red;
+    font-size: 12px;
+    text-indent: 5px;
+}
+
+.inputs>input:read-only {
+    background-color: thistle;
+    color: rgb(243, 236, 236);
+}
+
+
+/*************************************
+               多列布局
+*************************************/
+
+.column {
+    column-count: 2;
+    /* 列分割线的线型样式  */
+    column-rule: solid 8px red;
+    /* 
+    column-fill:auto 指示内容在各列之间从头开始顺序罗列
+    column-fill:balance 指示内容在各列之间平均分配
+    */
+    column-fill: balance;
+    /* 列间距，看起来像分割线的 margin */
+    column-gap: 4px;
+}
+
+.column>h3 {
+    text-align: center;
+    column-span: all;
+}
+
+
+/*************************************
+                 浮动
+*************************************/
+
+.floats {
+    width: 100%;
+}
+
+.floats img:nth-of-type(1) {
+    width: 50px;
+    float: left;
+}
+
+.floats img:nth-of-type(2) {
+    width: 50px;
+    float: right;
+}
+
+.clearP {
+    clear: left;
+}
+
+
+/*************************************
+           弹性盒子的三种排布
+*************************************/
+
+.tanxing {
+    width: 100%;
+}
+
+.tanxing>p {
+    font-size: 12px;
+    color: rgb(15, 11, 243);
+}
+
+.gg {
+    border: 1px solid red;
+    display: flex;
+    font-size: 14px;
+    padding: 2px 0;
+}
+
+.gg>p {
+    background-color: rgb(235, 204, 192);
+    padding: 2px 5px;
+}
+
+.ffff {
+    justify-content: space-around;
+}
+
+.ffff1 {
+    justify-content: space-evenly;
+}
+
+.ffff2 {
+    justify-content: space-between;
+}
+
+
+/*************************************
+               书写方向
+*************************************/
+
+.modle {
+    display: flex;
+    justify-self: start;
+    border: 1px dashed;
+}
+
+.modle p {
+    padding: 2px 10px;
+}
+
+.writeModle1 {
+    direction: ltr;
+}
+
+.writeModle2 {
+    direction: rtl;
+}
+
+
+/*************************************
+               锥形渐变
+*************************************/
+
+.yuanzhui {
+    width: 100%;
+}
+
+.yuanzhui>p {
+    display: inline-block;
+    margin-right: 4px;
+    width: 100px;
+    height: 100px;
+}
+
+.yuanzhui>section {
+    font-size: 14px;
+}
+
+.yuanzhui>div {
+    background: url('../assets/88.jpg') no-repeat left bottom/200px 90px;
+    height: 140px;
+}
+
+.yuanzhui>div>p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.yuanzhui span {
+    margin-right: 25px;
+}
+
+
+/* 圆锥形渐变的色标则用角度(或弧度)来指定 */
+
+
+/* 如果第一个或最后一个色标指定角度，则它们的值分别为0deg和360deg */
+
+
+/* 默认情况下，颜色从一个色标处的颜色平滑过渡到下一个色标处的颜色，
+   颜色之间的中点是颜色过渡之间的中点。 */
+
+.yuanzhui>p:nth-of-type(1) {
+    background: conic-gradient(red 40deg, yellow 100deg, blue 150deg, pink);
+}
+
+
+/* 若不想要渐变，需要明确分界 */
+
+.yuanzhui>p:nth-of-type(2) {
+    background: conic-gradient(red 50deg, yellow 50deg, yellow 160deg, blue 160deg, blue 360deg);
+}
+
+.yuanzhui>p:nth-of-type(3) {
+    background: conic-gradient(#fff 90deg, #000 90deg 180deg, #fff 180deg 270deg, #000 270deg) left top/25% 25%;
+}
+
+
+/* 
+使用 ”from 角度 at 位置“ 定义渐变的起始角度和旋转圆心位置
+也可以只写 from 角度 或 at 位置，写了 from，则会把from定义的角度定义为初始0度
+*/
+
+.yuanzhui>p:nth-of-type(4) {
+    /* background: conic-gradient(from 50deg at 25% 25%, red 90deg, yellow 180deg, blue 270deg); */
+    background: conic-gradient(from 50deg, red 90deg, yellow 90deg, blue 270deg);
+    /* background: conic-gradient(at 40% 30%, red 90deg, yellow 180deg, blue 270deg); */
+}
+
+
+/*************************************
+               重复渐变
+*************************************/
+
+
+/* 重复多次渐变图案直到足够填满指定元素 */
+
+.chongfu1 {
+    width: 300px;
+    height: 50px;
+    /* 
+      to top, to bottom, to left 和 to right这些值会被转换成角度0度、180度、270度和90度。
+      其余值会被转换为一个以向顶部中央方向为起点顺时针旋转的角度。
+      渐变线的结束点与其起点中心对称。
+    
+    */
+    background: repeating-linear-gradient(30deg, lightpink, lightpink 5px, white 5px, white 10px);
+    margin-bottom: 10px;
+}
+
+.jingxiang {
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+
+/*
+  径向渐变时，第一个参数用来定位渐变的圆心和相应的尺寸
+*/
+
+.jingxiang>div:nth-child(1) {
+    color: white;
+    width: 148px;
+    height: 148px;
+    margin-bottom: 10px;
+    /* 默认是圆，尺寸根据外框除半 */
+    background: repeating-radial-gradient(rgb(19, 220, 247), powderblue 10px, red 20px, blue 30px, yellow 40px);
+}
+
+.jingxiang>div:nth-child(2) {
+    width: 148px;
+    height: 148px;
+    color: white;
+    background: radial-gradient(circle at 70% 20%, red 30%, blue 50%)
+}
+
+.jingxiang>div:nth-child(3) {
+    width: 148px;
+    height: 148px;
+    color: white;
+    /* 椭圆 x=30% y=60%, 圆心位置：40% 60% */
+    background: radial-gradient(ellipse 30% 60% at 40% 60%, red 30%, blue 50%)
+}
+
+.jingxiang>div:nth-child(4) {
+    width: 148px;
+    height: 148px;
+    color: white;
+    /* 
+       closest-side  渐变的边缘形状与容器距离渐变中心点最近的一边相切（圆形）或者至少与距离渐变中心点最近的垂直和水平边相切（椭圆）。
+       closest-corner	渐变的边缘形状与容器距离渐变中心点最近的一个角相交。
+       farthest-side  与 closest-side相反，边缘形状与容器距离渐变中心点最远的一边相切（或最远的垂直和水平边）。
+       farthest-corner	 渐变的边缘形状与容器距离渐变中心点最远的一个角相交。
+    */
+    background: radial-gradient(farthest-corner at 40% 60%, red 30%, blue 60%)
+}
+
+.xianxing {
+    width: 300px;
+    height: 50px;
+    color: white;
+    background: linear-gradient(40deg, red 30%, blue 70%);
+}
+
+
+/*************************************
+                鼠标样式
+*************************************/
+
+#div {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#div p {
+    border: 1px solid rgb(241, 194, 194);
+    margin: 0 5px 5px 0;
+    padding: 0 5px;
+    color: rgb(241, 194, 194);
+    font-size: 14px;
+}
+
+
+/*************************************
+                网格布局
+*************************************/
+
+.gridTip {
+    font-size: 14px;
+    margin: 0;
+}
+
+.setKuan {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.grid {
+    background-color: rgb(218, 250, 215);
+}
+
+#kuandu {
+    margin: 0 5px 5px 0;
+}
+
+.showGrid {
+    width: 100%;
+    height: 165px;
+    background: url('../assets/1.png') center/cover;
+}
+
+.grid div {
+    border: 1px solid rgb(228, 165, 165);
+    border-radius: 3px;
+    background-color: antiquewhite;
+}
+
+
+/* repeat() 函数网格 */
+
+.grid1 {
+    font-size: 12px;
+    /* 设置执行网格布局 */
+    display: grid;
+    /* 
+      fr 指代一个网格计算单位值，弹性值，fr的总和代表将总宽或总高分多少份
+      当fr用在 rows 时，如果没有给外框定义height属性，
+      则以子元素 content 高最大值定义为 1fr 表示高时的值，也是默认值 auto 的取值；
+
+      当fr用在 columns 时，如果没有给外框定义width属性，
+      则以子元素 content 宽定义为 1fr 表示宽时的值；
+      若子元素的内容较多，即使写了平均每格是 1fr宽度，但也会出现网格宽度不同现象
+    */
+    /* 
+    写法一：
+      grid-template-columns: repeat(3, 1fr); 1行3列
+      repeat(3, 1fr) 表示重复3次，生成1行3列，每格是 1个网格单位宽度
+      grid-template-columns: repeat(3, 1fr 2fr); 1行6列
+      repeat(3, 1fr 2fr) 表示重复3次，每次都的是 1fr和2fr 的表格一起被重复
+    写法二：
+      第一个参数表示第一列宽度，第二个参数表示第二列宽度，依此规则可以写很多个
+      每一个表示一个表格宽度，写了几个就表示一行里有几个表格，如：
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr; 
+      表示一行里有10格，第一格和最后一个占2个单位宽度
+    写法三：使用 minmax(min,max) 定义最小宽度和最大宽度
+      grid-template-columns: 1fr minmax(30px,60px) 1fr;
+    */
+    grid-template-columns: repeat(3, 1fr);
+    /* 
+    写法一：
+      grid-template-rows: repeat(3, 1fr); 3行1列
+      repeat(3, 1fr) 表示重复3次，生成3行1列，每行是 1个单位网格高度
+    写法二：
+      第一个参数表示第一列高度，第二个参数表示第二列高度，可以写很多个
+      每一个表示一个表格高度，写了几个就表示一列里有几行表格，如：
+      grid-template-rows: 2fr 1fr 1fr; 
+      表示一列里有4行，第一行占2个单位高度，若写多个，表示有多行
+    写法三：使用 minmax(min,max) 定义最小高度和最大高度
+      grid-template-rows: 1fr minmax(20px,40px);
+    */
+    grid-template-rows: 1fr 1fr;
+}
+
+
+/* 自适应宽度弹性网格 */
+
+.grid2 {
+    display: grid;
+    /* 设置网格间距:
+    grid-gap:  grid-row-gap grid-column-gap，后边最多接连个表示上下、左右的尺寸值
+    等同于分开写：
+    grid-row-gap: 2px;
+    grid-column-gap: 10px;
+    */
+    /* grid-row-gap: 2px;
+    grid-column-gap: 10px; */
+    grid-gap: 4px;
+    font-size: 12px;
+}
+
+
+/* 网格中的对齐 */
+
+
+/* 单独一个网格的对齐 */
+
+.duiqi {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 设置默认行高 */
+    grid-auto-rows: 40px;
+}
+
+.duiqi,
+.duiqi>div {
+    border: 1px solid rgb(0, 229, 255);
+    box-sizing: border-box;
+    font-size: 12px;
+}
+
+.duiqi1 {
+    align-self: stretch;
+    justify-self: end;
+}
+
+.duiqi2 {
+    align-self: start;
+}
+
+.duiqi3 {
+    align-self: end;
+}
+
+.duiqi4 {
+    /* 使网格内容在当前网格内绝对居中 */
+    align-self: center;
+    justify-self: center;
+}
+
+
+/* 整体网格的对齐 */
+
+.duiqiAll {
+    display: grid;
+    grid-template-columns: repeat(2, 50px);
+    grid-template-rows: repeat(2, 28px);
+    height: 70px;
+    width: 100%;
+    grid-gap: 5px;
+    /* 与弹性盒子一样，可选值有：
+    start center end
+    space-between space-around space-evenly
+    */
+    justify-content: center;
+    align-content: center;
+}
+
+.duiqiAll,
+.duiqiAll>div {
+    border: 1px solid rgb(0, 229, 255);
+    box-sizing: border-box;
+    font-size: 12px;
+}
+
+.duiqi11 {
+    align-self: stretch;
+}
+
+.duiqi21 {
+    align-self: start;
+}
+
+.duiqi31 {
+    align-self: end;
+}
+
+.duiqi41 {
+    align-self: center;
+}
+
+
+/* 网格的跨行、跨列 */
+
+.wrapper {
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 20px);
+}
+
+.wrapper>div {
+    border: 1px solid red;
+    box-sizing: border-box;
+}
+
+.box1 {
+    /* 
+    跨行写法一：grid-row: 1 / span 3;
+    表示从第一行，跨3行，span 关键字表示‘跨’，前后都可以加 span (看 box4)
+
+    跨行写法二：详细指定起始和结束
+     grid-column-start: 1;
+     grid-column-end: 2;
+     grid-row-start: 1;
+     grid-row-end: 4;
+
+    跨行写法三：使用 grid-area: 1 / 1 / 4 / 2; 
+    值的顺序类似 margin 从 top 逆时针到 right 依次罗列线序号
+          top              left            bottom           right
+    grid-row-start / grid-column-start /grid-row-end / grid-column-end
+
+    跨行写法四：反方向写
+
+    grid-column-start: -4;
+    grid-column-end: -3;
+    grid-row-start: -4;
+    grid-row-end: -1;
+
+    写法五：只写起始线，省略 "/"和后边的值，元素默认延伸一个轨道
+    */
+    grid-column: 1;
+    grid-row: 1 / span 3;
+}
+
+.box2 {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+}
+
+.box3 {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.box4 {
+    grid-column: 2 / span 2;
+    grid-row: 3 / span 4;
+}
+
+
+/* 命名网格 */
+
+
+/* 给线命名 */
+
+.wrapperw {
+    display: grid;
+    font-size: 12px;
+    /*
+    依次罗列线、间，没写出来的线、间就不会被渲染出来；最后一间没写，就不会出现第五格    
+                           第一线  间宽 第二线  间宽 第三线  间宽  */
+    grid-template-columns: [col1] 1fr [col2] 1fr [col3] 1fr [col4];
+    grid-template-rows: [row1] 20px [row2] 20px [row3] 20px [row4];
+}
+
+.wrapperw>div {
+    border: 1px solid rgb(9, 255, 0);
+    box-sizing: border-box;
+}
+
+.box1w {
+    grid-column-start: col1;
+    grid-column-end: col2;
+    grid-row-start: row1;
+    grid-row-end: row4;
+}
+
+.box2w {
+    grid-column-start: col3;
+    grid-column-end: col4;
+    grid-row-start: row1;
+    grid-row-end: row3;
+    background-color: blueviolet;
+    z-index: 2;
+}
+
+.box3w {
+    grid-column-start: col2;
+    grid-column-end: col3;
+    grid-row-start: row1;
+    grid-row-end: row2;
+}
+
+.box4w {
+    grid-column-start: col2;
+    grid-column-end: col4;
+    grid-row-start: row3;
+    grid-row-end: row4;
+}
+
+.box5w {
+    grid-column-start: col2;
+    grid-column-end: col4;
+    grid-row-start: row2;
+    grid-row-end: row3;
+    background-color: chartreuse;
+}
+
+
+/* 给格命名 */
+
+.nameGrid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* 命名网格的罗列顺序就是展现顺序 */
+    grid-template-areas: "content img";
+}
+
+.nameGrid li:nth-last-of-type(1) {
+    /* 对网格进行命名 */
+    grid-area: content;
+    background-color: #c5a8ff;
+}
+
+.nameGrid li:nth-last-of-type(2) {
+    grid-area: img;
+    background: url('../assets/timg.jpg') center/cover;
+}
+
+
+/* 自动排序填充网格，尽量减少参差不齐 */
+
+.titleP {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}
+
+.paixu,
+.paixu1 {
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 18px;
+    grid-gap: 2px;
+}
+
+.paixu>div,
+.paixu1>div {
+    background: aquamarine;
+}
+
+.paixu div:nth-child(4n+1) {
+    grid-column-end: span 2;
+    grid-row-end: span 2;
+    background-color: #ffa94d;
+}
+
+.paixu div:nth-child(2) {
+    grid-column: 3;
+    grid-row: 2 / 4;
+}
+
+.paixu div:nth-child(5) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+}
+
+
+/* 经过以上设置，网格就会回填缺口，以前网格会遗留下缺口，
+而现在它会为此前的缺口找到适合它的项目，然后把项目从 DOM 中拿出来再放到缺口中去。
+对于已经重新指定过顺序的网格，这样做不会改变项目之间原有的逻辑顺序 */
+
+.paixu1 {
+    /* 
+    控制着自动布局算法怎样运作，精确指定在网格中被自动布局的元素怎样排列
+    grid-auto-flow: row；逐行填充来排列元素，在必要时增加新行（优先铺满行）
+                         如果既没有指定 row 也没有 column，则默认为 row。
+    grid-auto-flow: column；指定自动布局算法通过逐列填充来排列元素，在必要时增加新列。
+    grid-auto-flow: dense；指定自动布局算法使用一种“稠密”堆积算法，如果后面出现了稍小的元素，
+                           则会试图去填充网格中前面留下的空白
+    */
+    grid-auto-flow: dense;
+}
+
+.paixu1 div:nth-child(4n+1) {
+    grid-column-end: span 2;
+    grid-row-end: span 2;
+    background-color: #ffa94d;
+}
+
+.paixu1 div:nth-child(2) {
+    grid-column: 3;
+    grid-row: 2 / 4;
+}
+
+.paixu1 div:nth-child(5) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+}
+
+
+/*************************************
+               剪切图形
+*************************************/
+
+.path>section {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.path>p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.path>section>div {
+    width: 170px;
+    height: 120px;
+    margin: 5px;
+    background-color: rgb(243, 220, 220);
+    font-size: 12px;
+}
+
+.path>section p {
+    height: 50%;
+    background-color: rgb(157, 221, 144);
+}
+
+.path1 {
+    padding: 7px;
+    clip-path: inset(10px 50px 30px 10px);
+}
+
+.path2 {
+    clip-path: circle(30px at 80px 30px);
+}
+
+.path3 {
+    clip-path: ellipse(60px 20px at 50% 55%);
+}
+
+.path4 {
+    clip-path: polygon(40px 0px, 140px 10px, 80px 30px);
+}
+
+
+/****************************************
+ 使用 clip-path 和 shape-image-threshold
+****************************************/
+
+.use_clipPath {
+    width: 100%;
+    word-wrap: break-word;
+    font-size: 16px;
+}
+
+.use_clipPath>span {
+    width: 200px;
+    height: 130px;
+    float: right;
+    clip-path: polygon(0px 0px, 190px 30px, 180px 130px, 0 130px, 80px 90px);
+    background: url('../assets/timg.jpg') no-repeat right bottom/cover;
+    shape-outside: polygon(0px 0px, 190px 30px, 180px 130px, 0 130px, 80px 90px);
+    /* 
+      shape-margin 用于设定由 shape-outside 创建的CSS形状的外边距。
+    */
+    shape-margin: 5px;
+}
+
+
+/*************************************
+              css 立体
+*************************************/
+
+.last>div {
+    margin-bottom: 10px;
+}
+
+
+/*
+perspective：length; 指定了观察者与 z=0 平面的距离，使具有三维位置变换的元素产生透视效果，一般设置z>0
+perspective-origin:x y; 指定了观察者的位置
+
+*/
+
+.liti {
+    transform-style: prespective-3d;
+    perspective-origin: 400px 300px;
+    position: relative;
+    width: 300px;
+    perspective: 500px;
+    padding-top: 220px;
+    transform: rotate3d(0, 0, 0, 45deg) scale3d(1.2, 1.4, 0.8);
+    /*
+      rotate3d(x, y, z, a) CSS函数定义一个变换，它将元素围绕固定轴移动而不使其变形。
+      旋转规则的值的顺序是严格控制的。
+      运动量由指定的角度定义; 正的角度值表示顺时针旋转，负值表示逆时针旋转。
+
+      x 可以是0到1之间的数值，表示旋转轴X坐标方向的矢量。 
+        rotateX(a) 相当于 rotate3d(1, 0, 0, a).
+
+      y 可以是0到1之间的数值，表示旋转轴Y坐标方向的矢量。 
+        rotateY(a) 相当于 rotate3d(0, 1, 0, a).
+
+      z 可以是0到1之间的数值，表示旋转轴Z坐标方向的矢量。
+        rotateZ(a) 相当于 rotate3d(0, 0, 1, a)。
+
+      a 表示旋转角度。
+
+      scale3d(sx,sy,sz) 用三个值指定该函数，这三个值表示要在每个方向上应用的缩放比例。
+       sx 代表缩放向量的横坐标。
+       sy 代表缩放向量的纵坐标。
+       sz 代表缩放向量的z分量。
+
+    */
+}
+
+.liti>p {
+    width: 80px;
+    height: 80px;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    line-height: 100px;
+    position: absolute;
+    box-sizing: border-box;
+    margin: 0;
+    top: 75px;
+    left: 120px;
+}
+
+.liti>p:nth-child(1) {
+    background-color: sandybrown;
+    transform: translateZ(40px);
+}
+
+.liti>p:nth-child(2) {
+    background-color: rgba(192, 244, 96, 0.8);
+    /* 当平面旋转后，坐标系也跟着变 */
+    transform: rotateY(90deg) translateZ(40px);
+}
+
+.liti>p:nth-child(3) {
+    background-color: rgba(96, 222, 244, 0.8);
+    transform: rotateY(180deg) translateZ(40px);
+}
+
+.liti>p:nth-child(4) {
+    background-color: rgba(96, 111, 244, 0.8);
+    transform: rotateY(-90deg) translateZ(40px);
+}
+
+.liti>p:nth-child(5) {
+    background-color: rgba(165, 96, 244, 0.8);
+    transform: rotateX(90deg) translateZ(40px);
+}
+
+.liti>p:nth-child(6) {
+    background-color: rgba(244, 96, 207, 0.8);
+    transform: rotateX(-90deg) translateZ(40px);
+}
+
+
+/*************************************
+               二维缩放
+*************************************/
+
+.scales {
+    width: 200px;
+    height: 40px;
+    background-color: thistle;
+    /* 
+     scale(x,y); 缩放，等同于:transform: scaleX(0.8) scaleY(1.2); 
+    */
+    transform: scale(0.8, 1.2);
+    margin-top: 5px;
+}
+
+.zooms>div {
+    width: 300px;
+    height: 50px;
+    background-color: rgb(226, 179, 132);
+}
+
+.zooms:hover>div {
+    zoom: 0.8
+}
+
+
+/*************************************
+            使元素可调整大小
+*************************************/
+
+.resizable {
+    /*
+      resize: both;  宽高都可以变
+      resize: horizontal;  只能变宽
+      resize: vertical;   只能变高
+    */
+    resize: both;
+    overflow: auto;
+    border: 1px solid black;
+    min-width: 100px;
+    min-height: 50px;
+}
+
+
+/*************************************
+            鼠标选中改变样式
+*************************************/
+
+.shubiaoSelect {
+    font-size: 16px;
+}
+
+
+/* ::selection CSS伪元素应用于文档中被用户高亮的部分 */
+
+.shubiaoSelect>p::selection {
+    color: red;
+    background-color: cyan;
+}
+
+
+/*************************************
+            文字相关
+*************************************/
+
+.shupaiWap {
+    display: flex;
+    justify-content: space-around;
+}
+
+.shupai1 {
+    writing-mode: vertical-lr;
+    letter-spacing: 5px;
+}
+
+.shupai2 {
+    writing-mode: vertical-rl;
+    font: 24px serif;
+}
+
+.shupai2 span {
+    /* 尝试水平排版框中的所有连续字符 */
+    text-combine-upright: all;
+}
+
+.decoration1 {
+    text-decoration: underline rgb(107, 189, 121);
+}
+
+.decoration2 {
+    text-decoration: line-through rgb(50, 240, 224);
+}
+
+.decoration3 {
+    text-decoration: underline dotted red;
+}
+
+.decoration4 {
+    text-decoration: underline wavy red;
+}
+
+.decoration5 {
+    text-decoration: underline overline wavy red;
+}
+
+.textShadow {
+    font-size: 20px;
+    /* x偏移 y偏移 阴影拓展 颜色 */
+    text-shadow: 2px 2px 5px red;
+}
+
+.big {
+    text-transform: capitalize;
+}
+
+
+/* 使用css变量 */
+
+:root {
+    --bk: red
+}
+
+.vars {
+    height: 50px;
+    background-color: var(--bk);
+    --color: blue;
+}
+
+.vars>span {
+    color: var(--color);
+}
+
+
+/**********************************************/
+
+.mix {
+    width: 182px;
+}
+
+.mixbody {
+    text-align: center;
+    color: #000;
+    background-image: linear-gradient(90deg, #fff 49.9%, #000 50%);
+}
+
+.mixh1 {
+    font-size: 26px;
+    mix-blend-mode: difference;
+    color: #fff;
+}
+
+
+/**********************************************/
+
+.zhanlian {
+    width: 300px;
+    height: 300px;
+}
+
+.slider {
+    font-family: sans-serif;
+    overflow-x: scroll;
+    height: 40%;
+    display: flex;
+}
+
+.has {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+#s1,
+#s2,
+#s3 {
+    height: 100%;
+    scroll-snap-align: start;
+    text-align: center;
+    position: relative;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.isH {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: rgb(238, 76, 76);
+    width: 100%;
+    left: 0;
+    font-size: 30px;
+}
+
+#s1 {
+    background-color: aqua;
+}
+
+#s2 {
+    background-color: rgb(0, 255, 0);
+}
+
+#s3 {
+    background-color: rgb(255, 0, 242);
+}
