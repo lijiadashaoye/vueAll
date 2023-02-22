@@ -326,6 +326,8 @@ background-attachment：决定背景图像的位置是在视口内固定 fixed�
 
 .isTable>caption {
     border: 1px solid red;
+    caption-side:top;
+    text-align:left
 }
 
 .isTable td {
@@ -671,6 +673,8 @@ background-attachment：决定背景图像的位置是在视口内固定 fixed�
 /* repeat() 函数网格 */
 
 .grid1 {
+    padding:8px;
+    margin:5px;
     font-size: 12px;
     /* 设置执行网格布局 */
     display: grid;
@@ -828,7 +832,8 @@ background-attachment：决定背景图像的位置是在视口内固定 fixed�
 .box1 {
     /* 
     跨行写法一：grid-row: 1 / span 3;
-    表示从第一行，跨3行，span 关键字表示‘跨’，前后都可以加 span (看 box4)
+    表示从第一行，跨3行，span 关键字表示‘跨’，
+    前后都可以加 span ，不跨可以不写span
 
     跨行写法二：详细指定起始和结束
      grid-column-start: 1;
@@ -866,7 +871,7 @@ background-attachment：决定背景图像的位置是在视口内固定 fixed�
 
 .box4 {
     grid-column: 2 / span 2;
-    grid-row: 3 / span 4;
+    grid-row: 3 ;
 }
 
 
@@ -1083,10 +1088,10 @@ background-attachment：决定背景图像的位置是在视口内固定 fixed�
 .use_clipPath>span {
     width: 200px;
     height: 130px;
-    float: right;
-    clip-path: polygon(0px 0px, 190px 30px, 180px 130px, 0 130px, 80px 90px);
+    float: left;
+    clip-path: polygon(0 0,90% 0,50% 40%,95% 100%,0 100%);
     background: url('../assets/timg.jpg') no-repeat right bottom/cover;
-    shape-outside: polygon(0px 0px, 190px 30px, 180px 130px, 0 130px, 80px 90px);
+    shape-outside: polygon(0 0,90% 0,50% 40%,95% 100%,0 100%,0 0);
     /* 
       shape-margin 用于设定由 shape-outside 创建的CSS形状的外边距。
     */
@@ -1198,7 +1203,7 @@ perspective-origin:x y; 指定了观察者的位置
     /* 
      scale(x,y); 缩放，等同于:transform: scaleX(0.8) scaleY(1.2); 
     */
-    transform: scale(0.8, 1.2);
+    transform: scale(0.8, 0.8);
     margin-top: 5px;
 }
 
@@ -1323,23 +1328,30 @@ perspective-origin:x y; 指定了观察者的位置
 /**********************************************/
 
 .mix {
-    width: 182px;
+    width: 220px;
 }
 
 .mixbody {
     text-align: center;
     color: #000;
-    background-image: linear-gradient(90deg, #fff 49.9%, #000 50%);
+    background: linear-gradient(90deg, #fff 50%, #000 50%);
 }
 
 .mixh1 {
-    font-size: 26px;
+    font-size: 26px;    
+    color: #d5d3d3;
     mix-blend-mode: difference;
-    color: #fff;
+}
+.mixh2 {
+    font-size: 26px;    
+    color: #d5d3d3;
+    mix-blend-mode: luminosity;
 }
 
 
-/**********************************************/
+/********************
+     滚动粘连
+**************************/
 
 .zhanlian {
     width: 300px;
@@ -1354,6 +1366,7 @@ perspective-origin:x y; 指定了观察者的位置
 }
 
 .has {
+    /* scroll-snap-type: y mandatory; */
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 }

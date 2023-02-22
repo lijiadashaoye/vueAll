@@ -5,64 +5,60 @@ import One from '../views/one.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-        path: '/one',
-        name: 'one',
-        component: One,
-        children: [{
-            path: '/one/canshu/:kk',
-            component: () =>
-                import ( /* webpackChunkName: "canshu" */ '@/components/one/canshu.vue'),
-        }]
-    },
-    {
-        path: '/two',
-        name: 'two',
+    path: '/one',
+    name: 'one',
+    component: One,
+    children: [{
+        path: '/one/canshu/:kk',
         component: () =>
-            import ( /* webpackChunkName: "two" */ '@/views/two.vue'),
-        meta: { // 用来定义路由守卫用
-            requiresAuth: true
-        },
-        // 写在路由配置里的守卫，类似 canActivate
-        beforeEnter: (to, from, next) => {
-            if (confirm(`在配置路由时，可以添加 beforeEnter 进行进入组件前的验证`)) {
-                next();
-            } else {
-                next(false);
-            }
+            import( /* webpackChunkName: "canshu" */ '@/components/one/canshu.vue'),
+    }]
+},
+{
+    path: '/two',
+    name: 'two',
+    component: () =>
+        import( /* webpackChunkName: "two" */ '@/views/two.vue'),
+    meta: { // 用来定义路由守卫用
+        requiresAuth: true
+    },
+    // 写在路由配置里的守卫，类似 canActivate
+    beforeEnter: (to, from, next) => {
+        if (confirm(`在配置路由时，可以添加 beforeEnter 进行进入组件前的验证`)) {
+            next();
+        } else {
+            next(false);
         }
-    },
-    // 路由的重定向
-    {
-        path: '/four',
-        redirect: {
-            name: 'three'
-        }
-    },
-    {
-        path: '/',
-        redirect: {
-            name: 'one'
-        }
-    },
-    {
-        path: '/three',
-        name: 'three',
-        component: () =>
-            import ( /* webpackChunkName: "three" */ '@/views/three.vue'),
-    },
-    {
-        path: '/css',
-        name: 'css',
-        component: () =>
-            import ( /* webpackChunkName: "five" */ '@/views/css.vue'),
-    },
-    {
-        path: '/js',
-        name: 'js',
-        component: () =>
-            import ( /* webpackChunkName: "six" */ '@/views/js.vue'),
     }
+},
+// 路由的重定向
+{
+    path: '/four',
+    redirect: {
+        name: 'three'
+    }
+},
+{
+    path: '/',
+    redirect: {
+        name: 'one'
+    }
+},
+{
+    path: '/three',
+    name: 'three',
+    component: () =>
+        import( /* webpackChunkName: "three" */ '@/views/three.vue'),
+},
+{
+    path: '/css',
+    name: 'css',
+    component: () =>
+        import( /* webpackChunkName: "five" */ '@/views/css.vue'),
+},
+
 ]
+
 
 const router = new VueRouter({
     mode: 'hash',
@@ -88,5 +84,21 @@ router.beforeEach((to, from, next) => {
     // console.log(from)
     next();
 })
+// 动态添加路由
+setTimeout(() => {
+    router.addRoutes([
+        {
+            path: '/js',
+            name: 'js',
+            component: () => import('@/views/js.vue'),
+        }
+    ])
+}, 2000)
+
+const routerPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function (location) {
+    return routerPush.call(this, location).catch(() => { })
+
+};
 
 export default router

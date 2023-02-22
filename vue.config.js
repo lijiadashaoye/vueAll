@@ -22,10 +22,10 @@ module.exports = {
                 .options({
                     // 需要插入的文件路径，可以是一个字符串，也可以是字符串数组
                     // 只有写到 resources 数组里，scss文件之间才可互相引用变量
-                    // resources: "./src/base.scss"
-                    resources: ["./src/globalScss.scss", "./src/views/css.scss"]
+                    resources: "./src/globalScss.scss" // 引入一个全局scss文件
+                        // resources: ["./src/globalScss.scss", "./src/views/css.scss"]  // 引入多个个全局scss文件
                 })
                 .end();
         });
-    }
+    },
 }

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <label>{{ kk }}：</label>
+    <label>{{ $attrs.attrs }}</label
+    ><br />
+    <label>{{ kk }}：</label><br />
+    <label>使用自定义指令：</label>
     <input
       v-makeFocus:[canshu]="{ color: 'white', text: 'hello!' }"
       type="input"
@@ -41,13 +44,13 @@ export default {
   directives: {
     self: {
       bind: function (...t) {
-        console.log(t);
+        console.log("bind", t);
       },
       inserted: function (...t) {
-        console.log(t);
+        console.log("inserted", t);
       },
       update: function (...t) {
-        console.log(t);
+        console.log("update", t);
       },
     },
   },

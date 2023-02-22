@@ -39,6 +39,7 @@
         <br />
         <img :src="imgs" />
       </div>
+
       <div>
         <h3>样式的切换</h3>
         <button @click="changeClass">切换字体颜色</button>&nbsp;&nbsp;
@@ -138,7 +139,7 @@ export default {
     jiemi() {
       this.forJie = secret.Decrypt(this.forJia);
     },
-    changeImg: function () {
+    changeImg() {
       // 预先引入
       // import img1 from "../../../assets/1.jpeg";
       // import img2 from "../../../assets/2.jpg";

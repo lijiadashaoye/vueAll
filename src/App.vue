@@ -34,9 +34,18 @@ export default {
   watch: {
     // $route：用来读取路由信息
     // $router：用来操作路由
-    $route: function (...d) {
-      this.activeNum = d[0].name;
-    },
+    // 使用数组可以同时执行多个方法
+    $route: [
+      function (...d) {
+        this.activeNum = d[0].name;
+      },
+      {
+        handler: function () {
+          console.log("使用数组可以同时执行多个方法");
+        },
+        immaediate: true,
+      },
+    ],
   },
   mounted() {
     this.activeNum = this.$route.name;

@@ -3,11 +3,8 @@
     <div id="waper">
       <canvas id="d3"></canvas>
       <canvas id="d4"></canvas>
-      <div
-        class="toText"
-        id="toText"
-      >
-        <div class="isSpan2">{{showNumber}} </div>
+      <div class="toText" id="toText">
+        <div class="isSpan2">{{ showNumber }}</div>
         <p class="point"></p>
       </div>
     </div>
@@ -24,7 +21,7 @@ export default {
       jindu: 0,
       progress: 100, // 设置最大值
       yuanxin: 15,
-      lineWidth: 10
+      lineWidth: 10,
     };
   },
   methods: {
@@ -56,7 +53,7 @@ export default {
         this.showNumber = this.jindu + " %";
         isWaper.style.transform = "rotate(" + (1.8 * this.jindu + 180) + "deg)";
         isWaper.style.display = "block";
-      }, 10);
+      }, 50);
     },
     useline(ctx, banjing) {
       // 沿着线渐变
@@ -110,7 +107,7 @@ export default {
         false
       );
       ctx.stroke();
-    }
+    },
   },
   mounted() {
     // 查询canvas标签尺寸设置进度条尺寸
@@ -123,7 +120,7 @@ export default {
     this.w = waperWidth;
     this.h = waperHeight;
     this.toInit();
-  }
+  },
 };
 </script>
 

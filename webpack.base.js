@@ -8,7 +8,7 @@ const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const template = path.resolve(__dirname, '../public/index.html');
-
+// 打包多页应用
 const plugins = [
     new HtmlWebpackPlugin({
         template,
@@ -35,10 +35,8 @@ const plugins = [
     // }),
 ]
 
-
 // 获取dll目录下的文件名
 const files = fs.readdirSync(path.resolve(__dirname, '../dll'));
-
 files.forEach((file) => {
     if (/.*\.dll.js/.test(file)) {
         plugins.push(
@@ -63,8 +61,7 @@ module.exports = {
         vue: './src/vue.js'
     },
     output: {
-        path: path.resolve(__dirname, '../dist'),
-        // publicPath: '/'
+        path: path.resolve(__dirname, '../dist')
     },
     resolve: { // 配置模块如何解析
         alias: { //创建 import 或 require 的别名，来确保模块引入变得更简单

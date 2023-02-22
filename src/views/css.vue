@@ -156,7 +156,7 @@
       <div style="width: 340px">
         <h4>表格</h4>
         <p style="font-size: 14px">
-          当表格添加了 width 后，可以用 table-layout: fixed
+          当表格添加了 width: 340px; 后，可以用 table-layout: fixed
           限定每个表格的宽度都一样
         </p>
         <table class="isTable">
@@ -200,7 +200,7 @@
         <p>使用 document.execCommand 复制，先选中一些内容</p>
         <button @click="copy">复制</button>&nbsp;&nbsp;
         <button @click="seeClip">查看剪切板内容</button>
-        <p>使用 Clipboard API 复制</p>
+        <p>使用 navigator.clipboard 复制</p>
         <input id="input" type="text" v-model="inp" />
         <button @click="copy1">复制</button>&nbsp;&nbsp;
         <button @click="seeClip">查看剪切板内容</button>
@@ -289,22 +289,22 @@
         <div>
           <p style="font-weight: bold">渐变走向不同</p>
           <p>
-            <span>锥形渐变方向</span>
-            <span>圆形渐变方向</span>
+            <span>锥形渐变方向conic-gradient</span>
+            <span>圆形渐变方向：repeating-radial-gradient</span>
           </p>
         </div>
       </div>
 
       <div>
         <h4>渐变</h4>
-        <div class="chongfu1">线型重复渐变</div>
+        <div class="chongfu1">线型重复渐变：repeating-linear-gradient</div>
         <div class="jingxiang">
-          <div>径向重复渐变</div>
-          <div>径向渐变</div>
-          <div>径向渐变</div>
-          <div>径向渐变</div>
+          <div>径向重复渐变：repeating-radial-gradient</div>
+          <div>径向渐变：radial-gradient</div>
+          <div>径向渐变：radial-gradient</div>
+          <div>径向渐变：radial-gradient</div>
         </div>
-        <div class="xianxing">线性渐变</div>
+        <div class="xianxing">线性渐变：linear-gradient</div>
       </div>
 
       <div>
@@ -334,7 +334,7 @@
         <h4>网格布局</h4>
         <p class="gridTip">只需要按行或者列控制布局（一维）用弹性盒子</p>
         <p class="gridTip">需要同时按行和列控制布局（二维）用网格</p>
-
+        <p class="gridTip">网格作用的范围是content-box</p>
         <h4>repeat() 函数网格</h4>
         <div class="grid grid1">
           <div>One</div>
@@ -383,13 +383,14 @@
           <h4>网格中的对齐</h4>
           <p style="font-size: 14px">单独对齐</p>
           <p style="font-size: 14px">
-            用align-self justify-self 使网格内的内容相对当前网格进行位置摆放
+            用align-self设置上下位置，justify-self设置左右位置，
+            使网格内的内容相对内容所在的当前一小格进行位置摆放
           </p>
           <div class="duiqi">
-            <div class="duiqi1">One</div>
-            <div class="duiqi2">Two</div>
-            <div class="duiqi3">Three</div>
-            <div class="duiqi4">four</div>
+            <div class="duiqi1">stretch</div>
+            <div class="duiqi2">start</div>
+            <div class="duiqi3">end</div>
+            <div class="duiqi4">center</div>
           </div>
           <p style="font-size: 14px">整体对齐</p>
           <p style="font-size: 14px">
@@ -397,15 +398,15 @@
             使网格内的网格相对当前外框进行位置摆放
           </p>
           <div class="duiqiAll">
-            <div class="duiqi11">One</div>
-            <div class="duiqi21">Two</div>
-            <div class="duiqi31">Three</div>
-            <div class="duiqi41">four</div>
+            <div class="duiqi11">stretch</div>
+            <div class="duiqi21">start</div>
+            <div class="duiqi31">end</div>
+            <div class="duiqi41">center</div>
           </div>
         </div>
 
         <div>
-          <p>网格的跨行、跨列</p>
+          <p>网格的跨行grid-row、跨列grid-column</p>
           <div class="wrapper">
             <div class="box1">One</div>
             <div class="box2">Two</div>
@@ -458,7 +459,7 @@
           <div>Eleven</div>
           <div>Twelve</div>
         </div>
-        <p class="titleP">排序</p>
+        <p class="titleP">排序grid-auto-flow: dense</p>
         <div class="paixu1">
           <div>One</div>
           <div>Two</div>
@@ -547,6 +548,7 @@
             </div>
             <div>
               <p style="font-size: 16px; color: red">下划线样式</p>
+              <p style="font-size: 16px; color: red">text-decoration</p>
               <p class="decoration1">文字底下直线</p>
               <p class="decoration2">文字中间直线</p>
               <p class="decoration3">虚线</p>
@@ -555,20 +557,22 @@
             </div>
             <div>
               <p style="font-size: 16px; color: red">文字阴影</p>
+              <p style="font-size: 16px; color: red">text-shadow</p>
+
               <p class="textShadow">文字</p>
             </div>
           </div>
           <div class="shupaiWap">
             <div>
               <p style="font-size: 16px; color: red">单词首字母大写</p>
-              <p class="big">dog</p>
+              <p class="big">dog，text-transform: capitalize;</p>
             </div>
             <div>
               <p style="font-size: 16px; color: red">
                 使用css 自定义 var()函数
               </p>
               <p class="vars">
-                <span>局部使用变量</span>
+                <span>局部使用变量 var(--bk)</span>
               </p>
             </div>
           </div>
@@ -592,13 +596,13 @@
         <div>
           <h4>scale() 缩放</h4>
           <div class="scales">
-            <div>二维平面缩放</div>
+            <div>二维平面缩放，但占位还是那么大</div>
           </div>
         </div>
 
         <div class="zooms">
           <h4>zoom 缩放</h4>
-          <div>zoom 缩放会将元素和模型也缩小，鼠标划入看效果</div>
+          <div>zoom 缩放会将元素盒模型也缩小，鼠标划入看效果</div>
         </div>
 
         <div>
@@ -611,18 +615,14 @@
         <div>
           <span class="testScss">testScss</span>
           <p class="pp">用 @import</p>
-        </div>
-      </div>
-
-      <div class="mix">
-        <h4>css 混合模式</h4>
-        <div class="mixbody">
-          <h1 class="mixh1">css 的混合模式</h1>
+          <p class="pp">
+            css样式使用在vue.congig.js文件里配置的sass-resources-loader<br />实现变量互通
+          </p>
         </div>
       </div>
 
       <div class="zhanlian">
-        <h4>滚动粘连</h4>
+        <h4>滚动粘连 scroll-snap-type</h4>
         <p>无粘连</p>
         <div class="slider">
           <div id="s1">
@@ -646,6 +646,14 @@
           <div id="s3">
             <p class="isH">code秘密花园</p>
           </div>
+        </div>
+      </div>
+
+      <div class="mix">
+        <h4>css 混合模式</h4>
+        <div class="mixbody">
+          <h1 class="mixh1">difference 模式</h1>
+          <h1 class="mixh2">luminosity 模式</h1>
         </div>
       </div>
     </div>

@@ -19,6 +19,7 @@ export default new Vuex.Store({
     state: {
         age: 9
     },
+    // mutation内部必须是同步函数，异步会导致内部状态难以追踪
     mutations: {
         getAge: (state) => {
             state.age++;

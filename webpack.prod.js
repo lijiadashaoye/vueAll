@@ -45,8 +45,6 @@ const plugins = [
     }]),
 ];
 
-
-
 module.exports = merge({
     mode: 'production',
     // 如果没有设置mode，会剖出警告

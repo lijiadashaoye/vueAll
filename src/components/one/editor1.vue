@@ -87,7 +87,7 @@ export default {
   width: 100%;
   box-sizing: border-box !important;
   border: 1px solid rgb(199, 196, 196);
-  min-height: 205px;
+  min-height: 20px;
 }
 .w-e-text {
   overflow-y: hidden !important;

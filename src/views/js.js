@@ -54,8 +54,8 @@ function postmessage() {
 function fetchs() {
     let url = 'https://api.coindesk.com/v1/bpi/currentprice.json'
     fetch(url, {
-            method: 'get'
-        })
+        method: 'get'
+    })
         .then(t => t.json()) // 必须加的，主要使用 json() 和 text() 
         .then(data => console.log(data)) // 这一步才真正能看到请求结果数据
 }
@@ -131,32 +131,32 @@ function openDB() {
 
     return request
 }
-
+// 创建并打开数据库
 function makeIndexDB() {
     const customerData = [{
-            ssn: "100-100-100",
-            name: "Bill1",
-            age: 100,
-            email: "100@company.com"
-        },
-        {
-            ssn: "60-60-60",
-            name: "Bill2",
-            age: 60,
-            email: "60@home.org"
-        },
-        {
-            ssn: "30-30-30",
-            name: "Bill3",
-            age: 30,
-            email: "30@home.org"
-        },
-        {
-            ssn: "10-10-10",
-            name: "Bill",
-            age: 10,
-            email: "10@home.org"
-        }
+        ssn: "100-100-100",
+        name: "Bill1",
+        age: 100,
+        email: "100@company.com"
+    },
+    {
+        ssn: "60-60-60",
+        name: "Bill2",
+        age: 60,
+        email: "60@home.org"
+    },
+    {
+        ssn: "30-30-30",
+        name: "Bill3",
+        age: 30,
+        email: "30@home.org"
+    },
+    {
+        ssn: "10-10-10",
+        name: "Bill",
+        age: 10,
+        email: "10@home.org"
+    }
     ];
 
     // 打开数据库
@@ -219,7 +219,6 @@ function deleteData() {
         console.log('删除数据成功！')
     };
 }
-
 // 获取数据
 function getData() {
     // 打开数据库
@@ -232,7 +231,6 @@ function getData() {
         console.log('获取数据成功！')
     };
 }
-
 // 修改数据
 function putData() {
     // 打开数据库
@@ -245,7 +243,6 @@ function putData() {
         store.put(data);
     }
 }
-
 // 使用游标
 function useCursor() {
     // 打开目标对象
@@ -267,7 +264,6 @@ function useCursor() {
     };
 
 }
-
 // 使用索引
 // “name” 索引不是唯一的，查找"Bill" 的记录可能不止一条。在这种情况下，你总是得到键值最小的那个。
 function useIndex() {
@@ -299,7 +295,7 @@ function useRoundCursor() {
 function gundong() {
     var options = {
         root: document.querySelector('.wa'), // 定义父元素
-        rootMargin: '20px', // 用来设定交集区域向外扩展的距离
+        rootMargin: '50px', // 用来设定交集区域向外扩展的距离
         // 用来设定交集区域起始位置值，是子元素高度的百分之几，取值 0--1
         // 如果你想要target元素在root元素的可见程度每多25%就执行一次回调
         // 那么你可以指定一个数组[0, 0.25, 0.5, 0.75, 1]
@@ -345,7 +341,7 @@ function tongzhi() {
             image: 'https://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1588213972&t=38b9a73c6408f279df043817cf309453',
             icon: 'https://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1588213972&t=38b9a73c6408f279df043817cf309453'
         });
-        n.onclick = function () {
+        n.onclick = function (event) {
             event.preventDefault();
             n.close();
             console.log(n.data)
@@ -381,15 +377,7 @@ function makeCanvas() {
 
 /************  worker 学习 *********************/
 
-function test() {
-
-}
-
-
-let arr = [{
-        name: '测试',
-        fn: test
-    },
+let arr = [
     {
         name: '加载canvas',
         fn: makeCanvas
@@ -466,5 +454,4 @@ let arr = [{
 
 export default {
     arr
-
 }

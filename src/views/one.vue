@@ -4,9 +4,7 @@
     <div class="wap">
       <div>
         <h3>父组件</h3>
-        <p>
-          插槽：在父组件里引用子组件，但要从父组件里添加一些标签与子组件混合显示时使用
-        </p>
+        <p>插槽：写在父组件里，与子组件混合显示时使用</p>
         <p>先要把子组件引入，放到 components 里</p>
         <p>子组件中用&lt;slot&gt;标签，定义插槽位置、顺序</p>
         <p>
@@ -28,15 +26,17 @@
               的插槽，和子组件传递给父组件的参数(bbb)，但这个参数，只能用在 当前
               &lt;template&gt;&lt;/template&gt;标签内使用(作用域的原因)
             </p>
-
-            父子组件之间传递的参数名可以不一样，子组件里参数名是：ccc，父组件里用：bbb
-            接收； {{ bbb }}
-          </template>
-          <template #footer="g">
             <p style="color: red">
-              父组件用 #footer="g" 写法找到插槽，并传递参数
+              父子组件之间传递的参数名可以不一样，子组件里参数名是：ccc，父组件里用：bbb
+              接收，因为父组件里接收的是一个对象； {{ bbb }}
             </p>
-            user: {{ g }}
+          </template>
+          <template #footer="gg">
+            <p style="color: red">
+              父组件用 #footer="gg"
+              写法找到插槽，并传递参数，父组件中随意用参数名（gg）指代子组件传的参数，
+              gg: {{ gg }}
+            </p>
           </template>
           <template>
             <p>
@@ -50,10 +50,10 @@
       <div>
         <h3>依赖注入</h3>
         <p>
-          provide/inject 是解决组件之间的通信问题的利器，
+          provide/inject 是解决组件间的通信问题的利器，
           <br />不受层级结构的限制，但不是响应式的。
         </p>
-        <button @click="seeFuWu">使用依赖注入调用函数</button>
+        <button @click="seeFuWu">使用依赖注入调用服务源组件中的函数</button>
         <br />
         {{ seeFuWuData }}
         <br />
@@ -78,7 +78,7 @@
 
       <div>
         <h3>数据的监听</h3>
-        <p>基本数据：{{ val }}</p>
+        <p>基本数据：{{ computedval }}</p>
         <p>对象数据：{{ wat.name }}</p>
         <p>数组数据：{{ arr[0].one }}</p>
         <button @click="testWatch">深度监听</button>
@@ -121,13 +121,12 @@
 
       <div>
         <h3>使用自定义插件</h3>
-        <button @click="chajian">插件</button> <br />
-        {{ chanianData }}
+        <button @click="pluginCom">插件</button>
       </div>
 
       <div>
-        <h3>使用vue插件</h3>
-        <button @click="usePlugin">插件</button>
+        <h3>使用动态注册组件</h3>
+        <button @click="usePlugin">组件</button>
         <div :plugInputData="plugData" :is="plugData.component"></div>
       </div>
 
@@ -174,6 +173,28 @@
           }}</span>
         </p>
       </div>
+      <div>
+        <h3>keep-alive 使用</h3>
+        <div>
+          <button @click="componentName = 'one5'">one5</button>&nbsp;&nbsp;
+          <button @click="componentName = 'one6'">one6</button>
+          <transition appear name="fade" mode="out-in">
+            <keep-alive :include="['one5']">
+              <component :is="componentName"></component>
+            </keep-alive>
+          </transition>
+        </div>
+      </div>
+      <div>
+        <h3>笔记</h3>
+        <p>
+          v-for的优先级高于v-if，因此v-if会重复运行在每个v-for中，性能损耗严重。
+        </p>
+        <p>
+          正确写法：使用template标签进行包裹(template为html5的新标签，无特殊含义)
+        </p>
+        <p>currentTarget始终是监听事件者，而target是事件的真正发出者。</p>
+      </div>
     </div>
   </div>
 </template>
@@ -187,6 +208,9 @@ import one2 from "@/components/one/one2";
 import forMixin from "@/components/one/one4";
 import Editor from "@/components/one/editor.vue";
 import Editor1 from "@/components/one/editor1.vue";
+
+import one5 from "@/components/one/one5";
+import one6 from "@/components/one/one6";
 
 export default {
   // 同名钩子函数将合并为一个数组，因此都将被调用。
@@ -203,6 +227,8 @@ export default {
     one2,
     Editor,
     Editor1,
+    one5,
+    one6,
   },
   data() {
     return {
@@ -212,7 +238,7 @@ export default {
       seeFuWuData: "", // 查看依赖注入数据
       date: new Date(), // 过滤器使用的数据
 
-      val: 1,
+      computedval: 1,
       wat: {
         name: 10,
       },
@@ -229,9 +255,11 @@ export default {
       list: [],
       nextTickBefore: "",
       nextTickAfter: "",
+      componentName: "",
     };
   },
   created() {
+    this.name = this.$route.query.name;
     // 值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。
     this.minMethods(); // 两个组件有同名的方法，则调用当前组件里的方法
 
@@ -242,6 +270,7 @@ export default {
     // console.log(forMixin);
   },
   mounted() {
+    // console.log(this.$children); // 获取当前组件components里写到的并且用到的子组件
     // 深度监听写法一：
     // this.$watch(
     //   "wat",
@@ -249,7 +278,10 @@ export default {
     //     // 参数是一个数组，但没太大实际意义
     //     console.log(d);
     //   },
-    //   { deep: true, immediate: true }
+    //   {
+    // deep: true, // 深度监听
+    // immediate: true // 挂载上立即执行一次监听
+    // }
     // );
   },
   filters: {
@@ -264,7 +296,7 @@ export default {
   },
   watch: {
     // 表示监听组件内的值类型(数字、字符串、布尔值)数据变动
-    val: (...d) => {
+    computedval: (...d) => {
       // 参数是一个数组，[新值，旧值]
       console.log(d);
     },
@@ -288,18 +320,20 @@ export default {
     // 计算属性默认只有getter，不过在需要时你也可以提供一个setter
     testComputed: {
       // 读取 testComputed 时的监听函数，只要显示出来，就会调用get函数
-      get: function (...k) {
-        let data = this.selfInput + this.val;
-        console.log(k);
+      get: function () {
+        let data = this.selfInput + this.computedval;
+        console.log(data);
         return data;
       },
       // 设置 testComputed 时的监听函数
       set: function (...k) {
+        console.log("set方法");
         console.log(k);
-        this.selfInput += 50;
+        this.selfInput *= 10;
       },
     },
-    // getter 就是将state执行过getter方法后的结果返回，使得fromGetter在组件内用作属性来读值
+    // 第一个参数指定模块名称
+    // getter 就是将state执行过getter方法后的结果返回，使得 oneGetter2 在组件内可直接使用
     ...mapGetters("useNameSpace", ["oneGetter2"]), // 只能用来读取数据
     // 使用可传参方式获取getter，用到this，不能用箭头函数
     oneGetter1: function () {
@@ -326,14 +360,15 @@ export default {
     },
     // 获取全局依赖注入服务提供的数据
     getRoot() {
-      this.seeRootData = this.$root.data;
+      console.log(this.$root);
+      this.seeRootData = this.$root.$data;
     },
     // 数据的深度监听使用
     testWatch() {
+      this.computedval++;
       this.wat.name++;
       this.arr[0].one++; // 只能通过this.$watch监听到
       // this.arr = [{ one: 3234 }]; // 如果 arr 指向被重新赋值了，也可以通过 watch 监听到
-      this.val++;
     },
     // 测试 computed
     SetComputed() {
@@ -392,6 +427,13 @@ export default {
         ? "testPlugPage1"
         : "testPlugPage2";
     },
+    pluginCom() {
+      this.$pluginCom.add({
+        type: "success",
+        content: "成功信息提示",
+        duration: 3000,
+      });
+    },
 
     // 根据参数决定路由 path/:canshu 形式
     luyou(num) {
@@ -400,8 +442,7 @@ export default {
       });
     },
     fn() {
-      this.list = [];
-      for (let i = 10; i--; ) {
+      for (let i = 3; i--; ) {
         this.list.unshift(Math.trunc(Math.random() * 100));
       }
       this.nextTickBefore = this.$refs.ul.children.length;

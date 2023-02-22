@@ -1,6 +1,4 @@
 import axios from "axios"; // vue的http功能
-// 参考：https://www.jianshu.com/p/7a9fbcbb1114
-
 axios.defaults.baseURL = 'https://api.coindesk.com';
 // axios.defaults.headers['Authorization'] = 'user_token';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
