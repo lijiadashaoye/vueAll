@@ -75,13 +75,48 @@ module.exports = merge({
                         importLoaders: 2 //该方式可以让@import引入的css文件再次执行一边css打包loader
                     }
                 },
-                // 'sass-loader',
+                'sass-loader',
                 'less-loader',
                 'postcss-loader',
             ]
         }]
     },
     optimization: {
+        runtimeChunk: { // 打包后将包之间的依赖关系放进runtime.js中，此时不修改源文件，打包后的hash就不会变化了
+            name: 'runtime' //可自定义名称
+        },
+        splitChunks: {
+            chunks: 'all',
+            minSize: 30000, // 当大于指定大小时，对代码进行二次分割
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '_',
+            name: true,
+            cacheGroups: { // 缓存组：如果满足vendor的条件，就按vender打包，否则按default打包
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10, // 权重越大，打包优先级越高
+                    // filename: 'js/vender.js'  //将代码打包成名为vender.js的文件
+                    name: 'vender'
+                },
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    name: 'common',
+                    // filename: 'js/common.js',
+                    reuseExistingChunk: true // 是否复用已经打包过的代码
+                },
+                // 将公用的css单独抽离出来
+                common: {
+                    test: /(css[\\/]common.css)/,
+                    name: 'common',
+                    minChunks: 1, // 做小公用次数
+                    reuseExistingChunk: true
+                }
+            }
+        },
+        usedExports: true, // 使得tree shaking能够生效,将css从代码中拆分出来
         minimizer: [
             new TerserPlugin({ // 压缩js代码
                 cache: true, // 启用文件缓存

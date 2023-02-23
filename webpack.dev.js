@@ -17,7 +17,7 @@ module.exports = merge({
                         importLoaders: 2 //该方式可以让@import引入的css文件再次执行一边css打包loader
                     }
                 },
-                // 'sass-loader',
+                'sass-loader',
                 'less-loader',
                 'postcss-loader',
             ]
